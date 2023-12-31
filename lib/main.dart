@@ -1,4 +1,3 @@
-import 'package:datn_test/screens/calendar/calendar1.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/screens/calendar/calendar.dart';
 import 'package:datn_test/screens/home.dart';
@@ -17,7 +16,7 @@ class _SchoolManagementState extends State<SchoolManagement> {
   final List pages = [
     HomePage(),
     CalendarPage(),
-    DemoApp(),
+    null,
     null,
   ];
   @override

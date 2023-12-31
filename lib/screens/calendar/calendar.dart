@@ -6,6 +6,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  List<bool> dayActiveList = List.generate(7, (index) => false);
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -26,7 +27,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                   RichText(
                     text: TextSpan(
-                        text: "Oct",
+                        text: "Jan",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color(0XFF263064),
@@ -34,7 +35,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         ),
                         children: [
                           TextSpan(
-                            text: " 2009",
+                            text: " 2024",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 16,
@@ -44,13 +45,16 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                 ],
               ),
-              Text(
-                "Today",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color(0XFF3E3993),
+              GestureDetector(
+                onTap: _setToday,
+                child: Text(
+                  "Today",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0XFF3E3993),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -69,16 +73,36 @@ class _CalendarPageState extends State<CalendarPage> {
                   margin: EdgeInsets.only(top: 15, bottom: 30),
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildDateColumn("S", 7, false),
-                      buildDateColumn("M", 8, false),
-                      buildDateColumn("T", 9, false),
-                      buildDateColumn("W", 10, true),
-                      buildDateColumn("T", 11, false),
-                      buildDateColumn("F", 12, false),
-                      buildDateColumn("S", 13, false),
-                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(7, (index) {
+                      final now = DateTime.now();
+                      final currentWeekDay =
+                          DateTime(now.year, now.month, now.day)
+                              .add(Duration(days: index - now.weekday + 1));
+
+                      final weekDay = currentWeekDay.weekday; // Thứ trong tuần
+                      final day = currentWeekDay.day; // Ngày trong tháng
+
+                      // Check nếu index đang xét là ngày hiện tại, đặt active mặc định
+                      if (index == now.weekday - 1) {
+                        dayActiveList[index] = true;
+                      }
+
+                      return buildDateColumn(
+                        getWeekDayString(weekDay),
+                        day,
+                        dayActiveList[index],
+                        index == now.weekday - 1,
+                        () {
+                          setState(() {
+                            for (int i = 0; i < dayActiveList.length; i++) {
+                              dayActiveList[i] = false;
+                            }
+                            dayActiveList[index] = true;
+                          });
+                        },
+                      );
+                    }),
                   ),
                 ),
                 Expanded(
@@ -264,29 +288,69 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  Container buildDateColumn(String weekDay, int date, bool isActive) {
-    return Container(
-      decoration: isActive
-          ? BoxDecoration(
-              color: Color(0xff402fcc), borderRadius: BorderRadius.circular(10))
-          : BoxDecoration(),
-      height: 55,
-      width: 35,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            weekDay,
-            style: TextStyle(color: Colors.grey, fontSize: 11),
-          ),
-          Text(
-            date.toString(),
-            style: TextStyle(
+  GestureDetector buildDateColumn(String weekDay, int date, bool isActive,
+      bool isToday, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: isActive
+            ? BoxDecoration(
+                color: isToday
+                    ? Color.fromARGB(255, 11, 9, 20)
+                    : Color(0xff402fcc),
+                borderRadius: BorderRadius.circular(10),
+              )
+            : BoxDecoration(),
+        height: 55,
+        width: 35,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              weekDay,
+              style: TextStyle(color: Colors.grey, fontSize: 11),
+            ),
+            Text(
+              date.toString(),
+              style: TextStyle(
                 color: isActive ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold),
-          ),
-        ],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  String getWeekDayString(int weekDay) {
+    switch (weekDay) {
+      case DateTime.monday:
+        return 'Mon';
+      case DateTime.tuesday:
+        return 'Tue';
+      case DateTime.wednesday:
+        return 'Wed';
+      case DateTime.thursday:
+        return 'Thu';
+      case DateTime.friday:
+        return 'Fri';
+      case DateTime.saturday:
+        return 'Sat';
+      case DateTime.sunday:
+        return 'Sun';
+      default:
+        return '';
+    }
+  }
+
+  void _setToday() {
+    setState(() {
+      final now = DateTime.now();
+      for (int i = 0; i < dayActiveList.length; i++) {
+        dayActiveList[i] = false;
+      }
+      dayActiveList[now.weekday - 1] = true;
+    });
   }
 }
