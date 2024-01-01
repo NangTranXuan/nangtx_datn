@@ -1,3 +1,4 @@
+import 'package:datn_test/constants/ui_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/constants/app_colors.dart';
@@ -14,19 +15,20 @@ class ResultsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                height: 23.0,
-                width: MediaQuery.of(context).size.width * 0.45,
-                decoration: BoxDecoration(
-                    color: AppColors.kLGreyClr,
-                    borderRadius: BorderRadius.all(Radius.circular(5.5))),
-              ),
-              Listed(),
-              Listed(),
-              Listed(),
-              Listed(),
-              Listed(),
+              // Container(
+              //   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              //   height: 23.0,
+              //   width: MediaQuery.of(context).size.width * 0.45,
+              //   decoration: BoxDecoration(
+              //       color: AppColors.kLGreyClr,
+              //       borderRadius: BorderRadius.all(Radius.circular(5.5))),
+              // ),
+              // Listed(),
+              // Listed(),
+              // Listed(),
+              // Listed(),
+              // Listed(),
+              MainText(txt: "No Result For Now!"),
             ],
           ),
         ),

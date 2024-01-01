@@ -3,6 +3,8 @@ import 'package:datn_test/constants/time.dart';
 import 'package:datn_test/screens/home/FUNCTIONS.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/constants.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -75,8 +77,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://images.unsplash.com/photo-1541647376583-8934aaf3448a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"),
+                        image: NetworkImage("assets/icons/avatar.png"),
                       ),
                     ),
                   ),
@@ -87,9 +88,9 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hi Jackie",
+                        "Hi Nang Tran",
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: fontSizeText * 1.5,
                           fontWeight: FontWeight.w900,
                           color: Color(0XFF343E87),
                         ),
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         "Here is a list of schedule",
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: fontSizeText * 0.95,
                           color: Colors.blueGrey,
                         ),
                       ),
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         "You need to check...",
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: fontSizeText * 0.95,
                           color: Colors.blueGrey,
                         ),
                       ),
@@ -333,8 +334,7 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=80"),
+                    backgroundImage: NetworkImage("assets/icons/avatar.png"),
                     radius: 10,
                   ),
                   SizedBox(

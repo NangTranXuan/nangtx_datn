@@ -2,6 +2,8 @@ import 'package:datn_test/constants/app_colors.dart';
 import 'package:datn_test/constants/time.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/constants.dart';
+
 class CalendarPage extends StatefulWidget {
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -54,7 +56,7 @@ class _CalendarPageState extends State<CalendarPage> {
                               DateTime.now().year.toString(),
                           style: TextStyle(
                             color: AppColors.kBlueClr,
-                            fontSize: 12,
+                            fontSize: fontSizeText,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -232,8 +234,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   children: [
                     CircleAvatar(
                       radius: 9,
-                      backgroundImage: NetworkImage(
-                          "https://images.unsplash.com/photo-1541647376583-8934aaf3448a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=80"),
+                      backgroundImage: NetworkImage("assets/icons/avatar.png"),
                     ),
                     SizedBox(
                       width: 5,
