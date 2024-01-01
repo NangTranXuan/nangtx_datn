@@ -21,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       title: RichText(
         text: TextSpan(
-          text: 'Iqra Global School\n',
+          text: 'English School\n',
           style: TextStyle(color: Colors.black, fontSize: 20.0),
           children: <TextSpan>[
             TextSpan(
@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: Padding(
         padding: EdgeInsets.only(left: 20.0),
         child: Image.asset(
-          "assets/icons/logo.jpg",
+          "assets/icons/onlineclass.jpg",
         ),
       ),
       actions: <Widget>[

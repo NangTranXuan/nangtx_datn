@@ -1,3 +1,4 @@
+import 'package:datn_test/screens/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/screens/calendar/calendar.dart';
 import 'package:datn_test/screens/home.dart';
@@ -17,7 +18,7 @@ class _SchoolManagementState extends State<SchoolManagement> {
     HomePage(),
     CalendarPage(),
     null,
-    null,
+    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
