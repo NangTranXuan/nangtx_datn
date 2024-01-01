@@ -1,4 +1,5 @@
 import 'package:datn_test/constants/app_colors.dart';
+import 'package:datn_test/constants/time.dart';
 import 'package:flutter/material.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -38,21 +39,27 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                   RichText(
                     text: TextSpan(
-                        text: "Jan",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.kBlueClr,
-                          fontSize: 22,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: " 2024",
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                            ),
+                      text: getWeekDayString(DateTime.now().weekday) + ', ',
+                      style: TextStyle(
+                        color: AppColors.kBlueClr,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: DateTime.now().day.toString() +
+                              ' ' +
+                              getMonthString(DateTime.now().month) +
+                              ' ' +
+                              DateTime.now().year.toString(),
+                          style: TextStyle(
+                            color: AppColors.kBlueClr,
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
                           ),
-                        ]),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -95,15 +102,13 @@ class _CalendarPageState extends State<CalendarPage> {
                       final day = currentWeekDay.day; // Ngày trong tháng
 
                       // Check nếu index đang xét là ngày hiện tại, đặt active mặc định
-                      if (index == now.weekday - 1) {
-                        dayActiveList[index] = true;
-                      }
+                      // if (index == now.weekday - 1) {
+                      //   dayActiveList[index] = true;
+                      // }
 
                       return buildDateColumn(
                         getWeekDayString(weekDay),
                         day,
-                        dayActiveList[index],
-                        index == now.weekday - 1,
                         () {
                           setState(() {
                             for (int i = 0; i < dayActiveList.length; i++) {
@@ -112,6 +117,7 @@ class _CalendarPageState extends State<CalendarPage> {
                             dayActiveList[index] = true;
                           });
                         },
+                        dayActiveList[index],
                       );
                     }),
                   ),
@@ -299,16 +305,14 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  GestureDetector buildDateColumn(String weekDay, int date, bool isActive,
-      bool isToday, VoidCallback onTap) {
+  GestureDetector buildDateColumn(
+      String weekDay, int date, VoidCallback onTap, bool isActive) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: isActive
             ? BoxDecoration(
-                color: isToday
-                    ? Color.fromARGB(255, 11, 9, 20)
-                    : Color(0xff402fcc),
+                color: Color(0xff402fcc),
                 borderRadius: BorderRadius.circular(10),
               )
             : BoxDecoration(),
