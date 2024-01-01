@@ -1,3 +1,5 @@
+import 'package:datn_test/constants/app_colors.dart';
+import 'package:datn_test/constants/time.dart';
 import 'package:datn_test/screens/home/FUNCTIONS.dart';
 import 'package:flutter/material.dart';
 
@@ -29,20 +31,27 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.centerRight,
                 child: RichText(
                   text: TextSpan(
-                      text: "Wed",
-                      style: TextStyle(
-                          color: Color(0XFF263064),
+                    text: getWeekDayString(DateTime.now().weekday) + ', ',
+                    style: TextStyle(
+                      color: AppColors.kBlueClr,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: DateTime.now().day.toString() +
+                            ' ' +
+                            getMonthString(DateTime.now().month) +
+                            ' ' +
+                            DateTime.now().year.toString(),
+                        style: TextStyle(
+                          color: AppColors.kBlueClr,
                           fontSize: 12,
-                          fontWeight: FontWeight.w900),
-                      children: [
-                        TextSpan(
-                          text: " 10 Oct",
-                          style: TextStyle(
-                              color: Color(0XFF263064),
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal),
-                        )
-                      ]),
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(

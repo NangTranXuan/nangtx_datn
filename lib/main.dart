@@ -58,9 +58,9 @@ class _SchoolManagementState extends State<SchoolManagement> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.account_box_rounded,
+                  Icons.settings,
                 ),
-                label: 'Profile',
+                label: 'Setting',
               ),
             ],
           ),

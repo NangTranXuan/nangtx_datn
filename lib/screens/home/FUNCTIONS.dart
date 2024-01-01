@@ -50,6 +50,9 @@ class _MainFunctionState extends State<MainFunction> {
             ),
           ],
         ),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           children: [
             CustomIconButton(

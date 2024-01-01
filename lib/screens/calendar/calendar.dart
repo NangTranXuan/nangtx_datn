@@ -1,3 +1,4 @@
+import 'package:datn_test/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -12,16 +13,26 @@ class _CalendarPageState extends State<CalendarPage> {
     return Stack(
       children: [
         Container(
+          decoration: BoxDecoration(
+              //color: Color(0xFFD4E7FE),
+              gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFD4E7FE),
+                    Color(0xFFF0F0F0),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0.6, 0.3])),
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           alignment: Alignment.topCenter,
-          color: Color(0xFFF0F0F0),
+          // color: Color(0xFFF0F0F0),
           height: MediaQuery.of(context).size.height,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  Icon(Icons.calendar_today, color: Colors.grey),
+                  Icon(Icons.calendar_today, color: AppColors.kBlueClr),
                   SizedBox(
                     width: 15,
                   ),
@@ -30,7 +41,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         text: "Jan",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color(0XFF263064),
+                          color: AppColors.kBlueClr,
                           fontSize: 22,
                         ),
                         children: [
