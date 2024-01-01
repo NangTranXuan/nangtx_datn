@@ -114,8 +114,6 @@ class TextFieldComponent extends StatelessWidget {
         decoration: new InputDecoration(
             focusColor: AppColors.kOrangeClr,
             border: InputBorder.none,
-            //focusedBorder: InputBorder.none,
-            // enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             enabledBorder: OutlineInputBorder(

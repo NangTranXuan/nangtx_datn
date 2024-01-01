@@ -1,7 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:datn_test/constants.dart';
+import 'package:datn_test/constants/constants.dart';
 import 'package:datn_test/screens/profile/profile_list_item.dart';
 
 class ProfilePage extends StatelessWidget {

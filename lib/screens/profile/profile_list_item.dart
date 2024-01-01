@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:datn_test/constants.dart';
+import 'package:datn_test/constants/constants.dart';
 
 class ProfileListItem extends StatefulWidget {
   final IconData icon;
