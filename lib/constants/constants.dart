@@ -7,6 +7,8 @@ const kDarkSecondaryColor = Color(0xFF373737);
 const kLightPrimaryColor = Color(0xFFFFFFFF);
 const kLightSecondaryColor = Color(0xFFF3F7FB);
 const kAccentColor = Color(0xFFFFC107);
+const kPrimaryColor = Color(0XFF263064);
+const kPrimaryLightColor = Color(0xfffeeeee4);
 
 final kTitleTextStyle = TextStyle(
   fontSize: 14,
@@ -25,3 +27,5 @@ final kButtonTextStyle = TextStyle(
 );
 
 const double fontSizeText = 14;
+
+const double defaultPadding = 16.0;

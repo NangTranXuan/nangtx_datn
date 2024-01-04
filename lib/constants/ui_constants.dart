@@ -187,7 +187,7 @@ class CustomGestureText extends StatelessWidget {
             color: AppColors.kOrangeClr,
             fontSize: 16,
             letterSpacing: 0,
-            fontFamily: 'Lato',
+            
           ),
         ),
       ),
