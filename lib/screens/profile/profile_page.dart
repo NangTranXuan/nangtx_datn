@@ -1,5 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:datn_test/constants/setting.dart';
+import 'package:datn_test/constants/route.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:datn_test/constants/constants.dart';

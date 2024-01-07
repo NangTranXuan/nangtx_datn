@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:datn_test/globals.dart' as globals;
 
-import '../../constants/setting.dart';
+import '../../constants/route.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
