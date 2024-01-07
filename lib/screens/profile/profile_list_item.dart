@@ -2,17 +2,21 @@ import 'package:datn_test/screens/login/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:datn_test/constants/constants.dart';
+import 'package:http/http.dart' as http;
+import 'package:datn_test/globals.dart' as globals;
 
 class ProfileListItem extends StatefulWidget {
   final IconData icon;
   final String text;
   final bool hasNavigation;
+  final String apiUrl;
 
   const ProfileListItem({
     Key? key,
     required this.icon,
     required this.text,
     this.hasNavigation = true,
+    this.apiUrl = "",
   }) : super(key: key);
 
   @override
@@ -23,8 +27,16 @@ class _ProfileListItemState extends State<ProfileListItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (!widget.hasNavigation) {
+      onTap: () async {
+        var response = await http.get(
+          Uri.parse(widget.apiUrl),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${globals.accessToken}',
+          },
+        );
+        if (!widget.hasNavigation && response.statusCode == 200) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => LoginScreen()),

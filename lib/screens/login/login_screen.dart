@@ -4,14 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:datn_test/components/components.dart';
 import 'package:datn_test/components/under_part.dart';
 import 'package:datn_test/widgets/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+import 'package:datn_test/globals.dart' as globals;
+
+import '../../constants/setting.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  void validateAndSubmit(String email, String password, BuildContext context) {
-    if (email == "nang3007@gmail.com" && password == "30072001") {
+  Future<void> validateAndSubmit(
+      String email, String password, BuildContext context) async {
+    var response = await http.post(Uri.parse(urlLogin),
+        body: {'email': email, 'password': password});
+    var jsonResponse =
+        convert.jsonDecode(response.body) as Map<String, dynamic>;
+    if (response.statusCode == 200) {
+      globals.accessToken = jsonResponse["access_token"];
+      globals.tokenType = jsonResponse["type_token"];
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => NavigatorPage()),

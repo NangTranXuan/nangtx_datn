@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:datn_test/constants/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:datn_test/constants/constants.dart';
@@ -63,7 +64,7 @@ class ProfilePage extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'Upgrade to PRO',
+                'Edit profile',
                 style: kButtonTextStyle,
               ),
             ),
@@ -113,6 +114,7 @@ class ProfilePage extends StatelessWidget {
                         icon: LineAwesomeIcons.alternate_sign_out,
                         text: 'Logout',
                         hasNavigation: false,
+                        apiUrl: urlLogout,
                       ),
                     ],
                   ),

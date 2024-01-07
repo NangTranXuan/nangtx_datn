@@ -71,7 +71,7 @@ class _MainFunctionState extends State<MainFunction> {
                   MaterialPageRoute(builder: (context) => ExamSchedule()),
                 );
               },
-              title: "Exam Schedule",
+              title: "Exam",
               icon: "assets/icons/exam.png",
             ),
             CustomIconButton(

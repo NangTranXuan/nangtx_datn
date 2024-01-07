@@ -17,6 +17,7 @@ dependencies:
   line_awesome_flutter: ^2.0.0
   animated_theme_switcher: ^2.0.10
   flutter_svg: ^0.23.0
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
