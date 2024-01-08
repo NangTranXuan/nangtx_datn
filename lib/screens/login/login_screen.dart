@@ -2,7 +2,6 @@ import 'package:datn_test/constants/constants.dart';
 import 'package:datn_test/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/components/components.dart';
-import 'package:datn_test/components/under_part.dart';
 import 'package:datn_test/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -24,6 +23,27 @@ class LoginScreen extends StatelessWidget {
     if (response.statusCode == 200) {
       globals.accessToken = jsonResponse["access_token"];
       globals.tokenType = jsonResponse["type_token"];
+
+      //get user
+      response = await http.get(
+        Uri.parse(urlUser),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${globals.accessToken}',
+        },
+      );
+      jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (response.statusCode == 200) {
+        if (jsonResponse != null && jsonResponse.containsKey('data')) {
+          globals.fullName = jsonResponse['data']['first_name'] +
+              ' ' +
+              jsonResponse['data']['last_name'];
+          globals.email = jsonResponse['data']['email'];
+        }
+      }
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => NavigatorPage()),

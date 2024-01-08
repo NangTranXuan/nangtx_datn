@@ -2,6 +2,7 @@ import 'package:datn_test/constants/app_colors.dart';
 import 'package:datn_test/constants/time.dart';
 import 'package:datn_test/screens/home/FUNCTIONS.dart';
 import 'package:flutter/material.dart';
+import 'package:datn_test/globals.dart' as globals;
 
 import '../constants/constants.dart';
 
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -88,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hi Nang Tran",
+                        "Hi " + globals.fullName,
                         style: TextStyle(
                           fontSize: fontSizeText * 1.5,
                           fontWeight: FontWeight.w900,

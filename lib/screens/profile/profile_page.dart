@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:datn_test/constants/constants.dart';
 import 'package:datn_test/screens/profile/profile_list_item.dart';
+import 'package:datn_test/globals.dart' as globals;
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -46,12 +47,12 @@ class ProfilePage extends StatelessWidget {
           ),
           SizedBox(height: kSpacingUnit * 2),
           Text(
-            'Nang Tran Xuan',
+            globals.fullName,
             style: kTitleTextStyle,
           ),
           SizedBox(height: kSpacingUnit * 0.5),
           Text(
-            'nang3007@gmail.com',
+            globals.email,
             style: kCaptionTextStyle,
           ),
           SizedBox(height: kSpacingUnit * 2),
