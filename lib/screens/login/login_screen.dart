@@ -1,13 +1,13 @@
 import 'package:datn_test/constants/constants.dart';
 import 'package:datn_test/navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:datn_test/components/components.dart';
 import 'package:datn_test/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:datn_test/globals.dart' as globals;
-
 import '../../constants/route.dart';
+import '../../widgets/page_title_bar.dart';
+import '../../widgets/upside.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);

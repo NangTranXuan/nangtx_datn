@@ -1,12 +1,13 @@
-import 'dart:convert';
 import 'package:datn_test/constants/app_colors.dart';
 import 'package:datn_test/constants/constants.dart';
 import 'package:datn_test/constants/time.dart';
-import 'package:datn_test/screens/home/home_api.dart';
 import 'package:datn_test/screens/home_screen_item/FUNCTIONS.dart';
 import 'package:datn_test/widgets/home_item.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/globals.dart' as globals;
+import 'package:http/http.dart' as http;
+import 'package:datn_test/constants/route.dart';
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,10 +16,92 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var lessonData;
+  var taskData;
+  List<Container> lessonTodayItems = [];
+  List<Container> taskItems = [];
+
   void initState() {
     super.initState();
     Future.microtask(() {
-      lessonData = getLesson();
+      getLesson();
+      getTask();
+    });
+  }
+
+  Future getLesson() async {
+    var response = await http.post(
+      Uri.parse(urlLesson),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${globals.accessToken}',
+      },
+      body: jsonEncode(<String, String>{
+        'type': '1',
+      }),
+    );
+
+    setState(() {
+      lessonData = jsonDecode(response.body);
+      for (int i = 0; i < lessonData.length; i++) {
+        for (var j = 0; j < lessonData[i]['lessons'].length; j++) {
+          lessonTodayItems.add(buildClassItem(
+              context,
+              DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
+                      .hour
+                      .toString() +
+                  ":" +
+                  DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
+                      .minute
+                      .toString(),
+              DateTime.parse(lessonData[i]['lessons'][j]['start_time']).hour <
+                  12,
+              lessonData[i]['name'] +
+                  " (" +
+                  lessonData[i]['lessons'][j]['lesson_name'] +
+                  ")",
+              lessonData[i]['room']['name'] + address,
+              lessonData[i]['teacher']['first_name'] +
+                  " " +
+                  lessonData[i]['teacher']['last_name']));
+        }
+      }
+    });
+  }
+
+  Future getTask() async {
+    var response = await http.get(
+      Uri.parse(urlTask),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${globals.accessToken}',
+      },
+    );
+
+    setState(() {
+      taskData = jsonDecode(response.body);
+      for (int i = 0; i < taskData.length; i++) {
+        for (var j = 0; j < taskData[i]['homeworks'].length; j++) {
+          taskItems.add(buildTaskItem(
+              "Homework",
+              getTimeLeft(taskData[i]['homeworks'][j]['start_time']),
+              taskData[i]['name'],
+              taskData[i]['homeworks'][j]['homework_name'],
+              getColorLeft(taskData[i]['homeworks'][j]['start_time']),
+              true));
+        }
+        for (var j = 0; j < taskData[i]['exams'].length; j++) {
+          taskItems.add(buildTaskItem(
+            "Exam",
+            getTimeLeft(taskData[i]['exams'][j]['start_time']),
+            taskData[i]['name'],
+            taskData[i]['exams'][j]['exam_name'],
+            getColorLeft(taskData[i]['exams'][j]['start_time']),
+            false,
+          ));
+        }
+      }
     });
   }
 
@@ -28,7 +111,6 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           decoration: BoxDecoration(
-              //color: Color(0xFFD4E7FE),
               gradient: LinearGradient(
                   colors: [
                     Color(0xFFD4E7FE),
@@ -156,17 +238,17 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 20,
                 ),
-                buildTitleRow("YOUR CLASSES", 3),
+                buildTitleRow("SCHEDULE TODAY", lessonTodayItems.length),
                 SizedBox(
                   height: 20,
                 ),
-                // Column(
-                //   children: classList,
-                // ),
-                SizedBox(
-                  height: 20,
+                Column(
+                  children: lessonTodayItems,
                 ),
-                buildTitleRow("YOUR TASKS", 3),
+                SizedBox(
+                  height: 10,
+                ),
+                buildTitleRow("YOUR TASKS", taskItems.length),
                 SizedBox(
                   height: 20,
                 ),
@@ -174,14 +256,7 @@ class _HomePageState extends State<HomePage> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      buildTaskItem(
-                          3, "The Basic of Typography II", Colors.red),
-                      buildTaskItem(3, "Design Psychology: Principle of...",
-                          Colors.green),
-                      buildTaskItem(3, "Design Psychology: Principle of...",
-                          Colors.green),
-                      buildTaskItem(3, "Design Psychology: Principle of...",
-                          Colors.green),
+                      ...taskItems,
                     ],
                   ),
                 ),
@@ -195,112 +270,4 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-
-  Container buildClassItem(String time, bool isAM, String className,
-      String roomName, String teacherName) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 15),
-      padding: EdgeInsets.all(10),
-      height: 100,
-      decoration: BoxDecoration(
-        color: Color(0xFFF9F9FB),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "07:00",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "AM",
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-              ),
-            ],
-          ),
-          Container(
-            height: 100,
-            width: 1,
-            color: Colors.grey.withOpacity(0.5),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width - 160,
-                child: Text(
-                  "The Basic of Typography II",
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    color: Colors.grey,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 160,
-                    child: Text(
-                      "Room C1, Faculty of Art & Design Building",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.grey, fontSize: 13),
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage("assets/icons/avatar.png"),
-                    radius: 10,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    "Gabriel Sutton",
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
-                  )
-                ],
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  // List<Container> getClassItems() {
-  //   List<Container> items = [];
-  //   for (int i = 0; i < lessonData.length; i++) {
-  //     for (var j = 0; j < lessonData[i]['lessons'].length; j++) {
-  //       items.add(buildClassItem(
-  //           DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
-  //                   .hour
-  //                   .toString() +
-  //               ":" +
-  //               DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
-  //                   .minute
-  //                   .toString(),
-  //           DateTime.parse(lessonData[i]['lessons'][j]['start_time']).hour < 12,
-  //           lessonData[i]['name'],
-  //           lessonData[i]['room']['name'] + address,
-  //           lessonData[i]['teacher']['first_name'] +
-  //               " " +
-  //               lessonData[i]['teacher']['last_name']));
-  //     }
-  //   }
-  //   return items;
-  // }
 }

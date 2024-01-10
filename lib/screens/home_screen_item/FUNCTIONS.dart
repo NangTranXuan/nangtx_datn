@@ -24,8 +24,8 @@ class _MainFunctionState extends State<MainFunction> {
                   MaterialPageRoute(builder: (context) => HomeWork()),
                 );
               },
-              title: "Home Work",
-              icon: "assets/icons/house.png",
+              title: "Your Classes",
+              icon: "assets/icons/class.png",
             ),
             CustomIconButton(
               onPressed: () {
@@ -44,8 +44,8 @@ class _MainFunctionState extends State<MainFunction> {
                   MaterialPageRoute(builder: (context) => ResultsScreen()),
                 );
               },
-              title: "Results",
-              icon: "assets/icons/results.png",
+              title: "Complaints",
+              icon: "assets/icons/complain.png",
             ),
           ],
         ),
@@ -61,8 +61,8 @@ class _MainFunctionState extends State<MainFunction> {
                   MaterialPageRoute(builder: (context) => HomeWork()),
                 );
               },
-              title: "Payments",
-              icon: "assets/icons/payment.png",
+              title: "Home Work",
+              icon: "assets/icons/house.png",
             ),
             CustomIconButton(
               onPressed: () {
@@ -81,8 +81,8 @@ class _MainFunctionState extends State<MainFunction> {
                   MaterialPageRoute(builder: (context) => HomeWork()),
                 );
               },
-              title: "Complaints",
-              icon: "assets/icons/complain.png",
+              title: "Results",
+              icon: "assets/icons/results.png",
             ),
           ],
         ),

@@ -51,3 +51,35 @@ String getMonthString(int month) {
       return '';
   }
 }
+
+String getTimeLeft(String time) {
+  var now = DateTime.now();
+  var dayLeft = DateTime.parse(time).day - DateTime.parse(now.toString()).day;
+  var hourLeft =
+      DateTime.parse(time).hour - DateTime.parse(now.toString()).hour;
+  if (dayLeft > 0) {
+    return "$dayLeft days left";
+  } else {
+    if (hourLeft > 0) {
+      return "$hourLeft hours left";
+    } else {
+      return "Expiring soon";
+    }
+  }
+}
+
+Color getColorLeft(String time) {
+  var now = DateTime.now();
+  var dayLeft = DateTime.parse(time).day - DateTime.parse(now.toString()).day;
+  var hourLeft =
+      DateTime.parse(time).hour - DateTime.parse(now.toString()).hour;
+  if (dayLeft > 0) {
+    return Colors.blue;
+  } else {
+    if (hourLeft > 0) {
+      return Colors.blue;
+    } else {
+      return Colors.red;
+    }
+  }
+}
