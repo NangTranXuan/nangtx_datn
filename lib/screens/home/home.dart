@@ -9,101 +9,103 @@ import 'package:http/http.dart' as http;
 import 'package:datn_test/constants/route.dart';
 import 'dart:convert';
 
+import '../../globals.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  var lessonData;
-  var taskData;
-  List<Container> lessonTodayItems = [];
-  List<Container> taskItems = [];
+  // var lessonData;
+  // var taskData;
+  // List<Container> lessonTodayItems = [];
+  // List<Container> taskItems = [];
 
-  void initState() {
-    super.initState();
-    Future.microtask(() {
-      getLesson();
-      getTask();
-    });
-  }
+  // void initState() {
+  //   super.initState();
+  //   Future.microtask(() {
+  //     getLesson();
+  //     getTask();
+  //   });
+  // }
 
-  Future getLesson() async {
-    var response = await http.post(
-      Uri.parse(urlLesson),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ${globals.accessToken}',
-      },
-      body: jsonEncode(<String, String>{
-        'type': '1',
-      }),
-    );
+  // Future getLesson() async {
+  //   var response = await http.post(
+  //     Uri.parse(urlLesson),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json',
+  //       'Authorization': 'Bearer ${globals.accessToken}',
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       'type': '1',
+  //     }),
+  //   );
 
-    setState(() {
-      lessonData = jsonDecode(response.body);
-      for (int i = 0; i < lessonData.length; i++) {
-        for (var j = 0; j < lessonData[i]['lessons'].length; j++) {
-          lessonTodayItems.add(buildClassItem(
-              context,
-              DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
-                      .hour
-                      .toString() +
-                  ":" +
-                  DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
-                      .minute
-                      .toString(),
-              DateTime.parse(lessonData[i]['lessons'][j]['start_time']).hour <
-                  12,
-              lessonData[i]['name'] +
-                  " (" +
-                  lessonData[i]['lessons'][j]['lesson_name'] +
-                  ")",
-              lessonData[i]['room']['name'] + address,
-              lessonData[i]['teacher']['first_name'] +
-                  " " +
-                  lessonData[i]['teacher']['last_name']));
-        }
-      }
-    });
-  }
+  //   setState(() {
+  //     lessonData = jsonDecode(response.body);
+  //     for (int i = 0; i < lessonData.length; i++) {
+  //       for (var j = 0; j < lessonData[i]['lessons'].length; j++) {
+  //         lessonTodayItems.add(buildClassItem(
+  //             context,
+  //             DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
+  //                     .hour
+  //                     .toString() +
+  //                 ":" +
+  //                 DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
+  //                     .minute
+  //                     .toString(),
+  //             DateTime.parse(lessonData[i]['lessons'][j]['start_time']).hour <
+  //                 12,
+  //             lessonData[i]['name'] +
+  //                 " (" +
+  //                 lessonData[i]['lessons'][j]['lesson_name'] +
+  //                 ")",
+  //             lessonData[i]['room']['name'] + address,
+  //             lessonData[i]['teacher']['first_name'] +
+  //                 " " +
+  //                 lessonData[i]['teacher']['last_name']));
+  //       }
+  //     }
+  //   });
+  // }
 
-  Future getTask() async {
-    var response = await http.get(
-      Uri.parse(urlTask),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ${globals.accessToken}',
-      },
-    );
+  // Future getTask() async {
+  //   var response = await http.get(
+  //     Uri.parse(urlTask),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json',
+  //       'Authorization': 'Bearer ${globals.accessToken}',
+  //     },
+  //   );
 
-    setState(() {
-      taskData = jsonDecode(response.body);
-      for (int i = 0; i < taskData.length; i++) {
-        for (var j = 0; j < taskData[i]['homeworks'].length; j++) {
-          taskItems.add(buildTaskItem(
-              "Homework",
-              getTimeLeft(taskData[i]['homeworks'][j]['start_time']),
-              taskData[i]['name'],
-              taskData[i]['homeworks'][j]['homework_name'],
-              getColorLeft(taskData[i]['homeworks'][j]['start_time']),
-              true));
-        }
-        for (var j = 0; j < taskData[i]['exams'].length; j++) {
-          taskItems.add(buildTaskItem(
-            "Exam",
-            getTimeLeft(taskData[i]['exams'][j]['start_time']),
-            taskData[i]['name'],
-            taskData[i]['exams'][j]['exam_name'],
-            getColorLeft(taskData[i]['exams'][j]['start_time']),
-            false,
-          ));
-        }
-      }
-    });
-  }
+  //   setState(() {
+  //     taskData = jsonDecode(response.body);
+  //     for (int i = 0; i < taskData.length; i++) {
+  //       for (var j = 0; j < taskData[i]['homeworks'].length; j++) {
+  //         taskItems.add(buildTaskItem(
+  //             "Homework",
+  //             getTimeLeft(taskData[i]['homeworks'][j]['start_time']),
+  //             taskData[i]['name'],
+  //             taskData[i]['homeworks'][j]['homework_name'],
+  //             getColorLeft(taskData[i]['homeworks'][j]['start_time']),
+  //             true));
+  //       }
+  //       for (var j = 0; j < taskData[i]['exams'].length; j++) {
+  //         taskItems.add(buildTaskItem(
+  //           "Exam",
+  //           getTimeLeft(taskData[i]['exams'][j]['start_time']),
+  //           taskData[i]['name'],
+  //           taskData[i]['exams'][j]['exam_name'],
+  //           getColorLeft(taskData[i]['exams'][j]['start_time']),
+  //           false,
+  //         ));
+  //       }
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

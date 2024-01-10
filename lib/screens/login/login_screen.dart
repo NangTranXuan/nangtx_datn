@@ -1,72 +1,22 @@
+import 'dart:convert';
+
 import 'package:datn_test/constants/constants.dart';
 import 'package:datn_test/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 import 'package:datn_test/globals.dart' as globals;
 import '../../constants/route.dart';
+import '../../globals.dart';
+import '../../widgets/home_item.dart';
 import '../../widgets/page_title_bar.dart';
 import '../../widgets/upside.dart';
+import 'login_api.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Future<void> validateAndSubmit(
-      String email, String password, BuildContext context) async {
-    var response = await http.post(
-      Uri.parse(urlLogin),
-      body: {
-        'email': email,
-        'password': password,
-      },
-    );
-    var jsonResponse =
-        convert.jsonDecode(response.body) as Map<String, dynamic>;
-    if (response.statusCode == 200) {
-      globals.accessToken = jsonResponse["access_token"];
-      globals.tokenType = jsonResponse["type_token"];
-
-      //get user
-      response = await http.get(
-        Uri.parse(urlUser),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${globals.accessToken}',
-        },
-      );
-      jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
-
-      if (response.statusCode == 200) {
-        if (jsonResponse != null && jsonResponse.containsKey('data')) {
-          globals.fullName = jsonResponse['data']['first_name'] +
-              ' ' +
-              jsonResponse['data']['last_name'];
-          globals.email = jsonResponse['data']['email'];
-        }
-      }
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => NavigatorPage()),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-          'Invalid email or password',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.red,
-          ),
-        )),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
