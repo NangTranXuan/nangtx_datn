@@ -20,12 +20,8 @@ final kCaptionTextStyle = TextStyle(
   fontWeight: FontWeight.w100,
 );
 
-final kButtonTextStyle = TextStyle(
-  fontSize: 14,
-  fontWeight: FontWeight.w400,
-  color: kDarkPrimaryColor,
-);
-
 const double fontSizeText = 14;
 
 const double defaultPadding = 16.0;
+
+const String address = ", 281 Truong Dinh, Hoang Mai, Ha Noi";

@@ -16,8 +16,13 @@ class LoginScreen extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   Future<void> validateAndSubmit(
       String email, String password, BuildContext context) async {
-    var response = await http.post(Uri.parse(urlLogin),
-        body: {'email': email, 'password': password});
+    var response = await http.post(
+      Uri.parse(urlLogin),
+      body: {
+        'email': email,
+        'password': password,
+      },
+    );
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
     if (response.statusCode == 200) {
@@ -74,6 +79,9 @@ class LoginScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Stack(
               children: [
+                SizedBox(
+                  height: 20,
+                ),
                 const Upside(
                   imgUrl: "assets/icons/login.png",
                 ),

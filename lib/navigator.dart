@@ -1,7 +1,7 @@
 import 'package:datn_test/screens/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/screens/calendar/calendar.dart';
-import 'package:datn_test/screens/home.dart';
+import 'package:datn_test/screens/home/home.dart';
 
 class NavigatorPage extends StatefulWidget {
   const NavigatorPage({Key? key}) : super(key: key);

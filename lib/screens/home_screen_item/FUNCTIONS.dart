@@ -1,6 +1,6 @@
-import 'package:datn_test/screens/home/exam_schedule.dart';
-import 'package:datn_test/screens/home/home_work.dart';
-import 'package:datn_test/screens/home/results.dart';
+import 'package:datn_test/screens/home_screen_item/exam_schedule.dart';
+import 'package:datn_test/screens/home_screen_item/home_work.dart';
+import 'package:datn_test/screens/home_screen_item/results.dart';
 import 'package:flutter/material.dart';
 
 class MainFunction extends StatefulWidget {

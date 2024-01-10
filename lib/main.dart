@@ -2,7 +2,7 @@ import 'package:datn_test/screens/login/login_screen.dart';
 import 'package:datn_test/screens/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/screens/calendar/calendar.dart';
-import 'package:datn_test/screens/home.dart';
+import 'package:datn_test/screens/home/home.dart';
 
 void main() {
   runApp(SchoolManagement());

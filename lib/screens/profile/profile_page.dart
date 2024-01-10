@@ -66,7 +66,11 @@ class ProfilePage extends StatelessWidget {
             child: Center(
               child: Text(
                 'Edit profile',
-                style: kButtonTextStyle,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: kDarkPrimaryColor,
+                ),
               ),
             ),
           ),

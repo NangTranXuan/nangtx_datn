@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'package:datn_test/constants/app_colors.dart';
+import 'package:datn_test/constants/constants.dart';
 import 'package:datn_test/constants/time.dart';
-import 'package:datn_test/screens/home/FUNCTIONS.dart';
+import 'package:datn_test/screens/home/home_api.dart';
+import 'package:datn_test/screens/home_screen_item/FUNCTIONS.dart';
+import 'package:datn_test/widgets/home_item.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/globals.dart' as globals;
-
-import '../constants/constants.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,7 +14,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
+  var lessonData;
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      lessonData = getLesson();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -139,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 20,
                 ),
-                buildTitleRow("YOUR FUNCTIONS", 6, false),
+                buildTitleRow("YOUR FUNCTIONS", 6),
                 SizedBox(
                   height: 20,
                 ),
@@ -147,16 +156,17 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 20,
                 ),
-                buildTitleRow("TODAY CLASSES", 3, true),
+                buildTitleRow("YOUR CLASSES", 3),
                 SizedBox(
                   height: 20,
                 ),
-                buildClassItem(),
-                buildClassItem(),
+                // Column(
+                //   children: classList,
+                // ),
                 SizedBox(
                   height: 20,
                 ),
-                buildTitleRow("YOUR TASKS", 3, isSeeAll = true),
+                buildTitleRow("YOUR TASKS", 3),
                 SizedBox(
                   height: 20,
                 ),
@@ -166,6 +176,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       buildTaskItem(
                           3, "The Basic of Typography II", Colors.red),
+                      buildTaskItem(3, "Design Psychology: Principle of...",
+                          Colors.green),
                       buildTaskItem(3, "Design Psychology: Principle of...",
                           Colors.green),
                       buildTaskItem(3, "Design Psychology: Principle of...",
@@ -184,94 +196,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Container buildTaskItem(int numDays, String courseTitle, Color color) {
-    return Container(
-      margin: EdgeInsets.only(right: 15),
-      padding: EdgeInsets.all(12),
-      height: 140,
-      width: 140,
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Deadline",
-            style: TextStyle(fontSize: 10, color: Colors.grey),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Row(
-            children: [
-              Container(
-                height: 6,
-                width: 6,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(3),
-                ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                "$numDays days left",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: 100,
-            child: Text(
-              courseTitle,
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  var isSeeAll = false;
-  Row buildTitleRow(String title, int number, bool isSeeAll) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        RichText(
-          text: TextSpan(
-              text: title,
-              style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-              children: [
-                TextSpan(
-                  text: " ($number)",
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.normal),
-                ),
-              ]),
-        ),
-        Text(
-          isSeeAll ? "See all" : "",
-          style: TextStyle(
-              fontSize: 12,
-              color: Color(0XFF3E3993),
-              fontWeight: FontWeight.bold),
-        )
-      ],
-    );
-  }
-
-  Container buildClassItem() {
+  Container buildClassItem(String time, bool isAM, String className,
+      String roomName, String teacherName) {
     return Container(
       margin: EdgeInsets.only(bottom: 15),
       padding: EdgeInsets.all(10),
@@ -354,4 +280,27 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  // List<Container> getClassItems() {
+  //   List<Container> items = [];
+  //   for (int i = 0; i < lessonData.length; i++) {
+  //     for (var j = 0; j < lessonData[i]['lessons'].length; j++) {
+  //       items.add(buildClassItem(
+  //           DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
+  //                   .hour
+  //                   .toString() +
+  //               ":" +
+  //               DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
+  //                   .minute
+  //                   .toString(),
+  //           DateTime.parse(lessonData[i]['lessons'][j]['start_time']).hour < 12,
+  //           lessonData[i]['name'],
+  //           lessonData[i]['room']['name'] + address,
+  //           lessonData[i]['teacher']['first_name'] +
+  //               " " +
+  //               lessonData[i]['teacher']['last_name']));
+  //     }
+  //   }
+  //   return items;
+  // }
 }
