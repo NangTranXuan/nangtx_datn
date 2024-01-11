@@ -5,4 +5,5 @@ const urlLogin = '$urlBase/login'; // api login
 const urlUser = '$urlBase/user'; // api get user
 const urlLogout = '$urlBase/user/logout'; // api logout
 const urlLesson = '$urlBase/user/lesson'; // api post lesson
+const urlLessonSelectedDate = '$urlBase/user/lesson_schedule_task'; // api post lesson
 const urlTask = '$urlBase/user/task'; // api get

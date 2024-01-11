@@ -66,7 +66,7 @@ Future<void> validateAndSubmit(
       lessonData = jsonDecode(response.body)['data'];
       for (int i = 0; i < lessonData.length; i++) {
         for (var j = 0; j < lessonData[i]['lessons'].length; j++) {
-          lessonTodayItems.add(buildClassItem(
+          lessonHomes.add(buildClassItem(
               context,
               DateTime.parse(lessonData[i]['lessons'][j]['start_time'])
                       .hour
@@ -123,6 +123,7 @@ Future<void> validateAndSubmit(
         }
       }
     }
+    
 
     Navigator.push(
       context,

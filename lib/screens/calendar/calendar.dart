@@ -1,8 +1,13 @@
 import 'package:datn_test/constants/app_colors.dart';
 import 'package:datn_test/constants/time.dart';
+import 'package:datn_test/globals.dart';
+import 'package:datn_test/widgets/calendar_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:datn_test/constants/route.dart';
+import 'dart:convert';
 import '../../constants/constants.dart';
+import 'package:datn_test/globals.dart' as globals;
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -11,6 +16,70 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   List<bool> dayActiveList = List.generate(7, (index) => false);
+  List<Container> lessonSchedules = [];
+  @override
+  void initState() {
+    super.initState();
+    _setToday();
+  }
+
+  fetchDataForSelectedDate(context, DateTime dateTime) async {
+    var response = await http.post(
+      Uri.parse(urlLessonSelectedDate),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${globals.accessToken}',
+      },
+      body: jsonEncode(<String, String>{
+        'datetime': dateTime.toString(),
+      }),
+    );
+
+    var jsonResponse = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      var lessonDataSchedule = jsonDecode(response.body)['data'];
+      setState(() {
+        lessonSchedules = [];
+        for (int i = 0; i < lessonDataSchedule.length; i++) {
+          for (var j = 0; j < lessonDataSchedule[i]['lessons'].length; j++) {
+            lessonSchedules.add(buildTaskListItem(
+                context,
+                DateTime.parse(lessonDataSchedule[i]['lessons'][j]['start_time'])
+                        .hour
+                        .toString() +
+                    ":" +
+                    DateTime.parse(lessonDataSchedule[i]['lessons'][j]['start_time'])
+                        .minute
+                        .toString(),
+                DateTime.parse(lessonDataSchedule[i]['lessons'][j]['start_time'])
+                        .hour <
+                    12,
+                getDiffStartEndTime(
+                    DateTime.parse(lessonDataSchedule[i]['lessons'][j]['start_time'])
+                        .hour,
+                    DateTime.parse(
+                            lessonDataSchedule[i]['lessons'][j]['start_time'])
+                        .minute,
+                    DateTime.parse(lessonDataSchedule[i]['lessons'][j]['end_time'])
+                        .hour,
+                    DateTime.parse(lessonDataSchedule[i]['lessons'][j]['end_time'])
+                        .minute),
+                lessonDataSchedule[i]["name"],
+                lessonDataSchedule[i]['lessons'][j]["lesson_name"],
+                lessonDataSchedule[i]['teacher']["first_name"] +
+                    " " +
+                    lessonDataSchedule[i]['teacher']["last_name"],
+                lessonDataSchedule[i]['teacher']["phone_number"],
+                lessonDataSchedule[i]['room']["name"]));
+          }
+        }
+      });
+    } else {
+      print("Error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -103,13 +172,9 @@ class _CalendarPageState extends State<CalendarPage> {
                       final weekDay = currentWeekDay.weekday; // Thứ trong tuần
                       final day = currentWeekDay.day; // Ngày trong tháng
 
-                      // Check nếu index đang xét là ngày hiện tại, đặt active mặc định
-                      // if (index == now.weekday - 1) {
-                      //   dayActiveList[index] = true;
-                      // }
-
                       return buildDateColumn(
-                        getWeekDayString(weekDay),
+                        context,
+                        getWeekDayStringShortened(weekDay),
                         day,
                         () {
                           setState(() {
@@ -117,9 +182,11 @@ class _CalendarPageState extends State<CalendarPage> {
                               dayActiveList[i] = false;
                             }
                             dayActiveList[index] = true;
+                            fetchDataForSelectedDate(context, currentWeekDay);
                           });
                         },
                         dayActiveList[index],
+                        currentWeekDay,
                       );
                     }),
                   ),
@@ -128,9 +195,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        buildTaskListItem(),
-                        buildTaskListItem(),
-                        buildTaskListItem(),
+                        ...lessonSchedules,
                       ],
                     ),
                   ),
@@ -143,223 +208,6 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  Container buildTaskListItem() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 25),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 15,
-                height: 10,
-                decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.horizontal(
-                      right: Radius.circular(5),
-                    )),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width - 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                          text: "07:00",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: " AM",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey,
-                              ),
-                            )
-                          ]),
-                    ),
-                    Text(
-                      "1 h 45 min",
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 185,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey),
-                borderRadius: BorderRadius.circular(20)),
-            margin: EdgeInsets.only(right: 10, left: 30),
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Typography",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "The Basic of Typography I",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 9,
-                      backgroundImage: NetworkImage("assets/icons/avatar.png"),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Gabriel Sutton",
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "722-085-9210",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.location_on,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Faculty of Art & Design Building",
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Room C1, 1st floor",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  GestureDetector buildDateColumn(
-      String weekDay, int date, VoidCallback onTap, bool isActive) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: isActive
-            ? BoxDecoration(
-                color: Color(0xff402fcc),
-                borderRadius: BorderRadius.circular(10),
-              )
-            : BoxDecoration(),
-        height: 55,
-        width: 35,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              weekDay,
-              style: TextStyle(color: Colors.grey, fontSize: 11),
-            ),
-            Text(
-              date.toString(),
-              style: TextStyle(
-                color: isActive ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String getWeekDayString(int weekDay) {
-    switch (weekDay) {
-      case DateTime.monday:
-        return 'Mon';
-      case DateTime.tuesday:
-        return 'Tue';
-      case DateTime.wednesday:
-        return 'Wed';
-      case DateTime.thursday:
-        return 'Thu';
-      case DateTime.friday:
-        return 'Fri';
-      case DateTime.saturday:
-        return 'Sat';
-      case DateTime.sunday:
-        return 'Sun';
-      default:
-        return '';
-    }
-  }
-
   void _setToday() {
     setState(() {
       final now = DateTime.now();
@@ -367,6 +215,7 @@ class _CalendarPageState extends State<CalendarPage> {
         dayActiveList[i] = false;
       }
       dayActiveList[now.weekday - 1] = true;
+      fetchDataForSelectedDate(context, now);
     });
   }
 }

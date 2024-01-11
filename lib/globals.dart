@@ -6,5 +6,5 @@ String accessToken = "";
 String tokenType = "";
 String fullName = "";
 String email = "";
-List<Container> lessonTodayItems = [];
+List<Container> lessonHomes = [];
 List<Container> taskItems = [];

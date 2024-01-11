@@ -21,6 +21,27 @@ String getWeekDayString(int weekDay) {
   }
 }
 
+String getWeekDayStringShortened(int weekDay) {
+  switch (weekDay) {
+    case DateTime.monday:
+      return 'Mon';
+    case DateTime.tuesday:
+      return 'Tue';
+    case DateTime.wednesday:
+      return 'Wed';
+    case DateTime.thursday:
+      return 'Thu';
+    case DateTime.friday:
+      return 'Fri';
+    case DateTime.saturday:
+      return 'Sat';
+    case DateTime.sunday:
+      return 'Sun';
+    default:
+      return '';
+  }
+}
+
 String getMonthString(int month) {
   switch (month) {
     case DateTime.january:
@@ -81,5 +102,14 @@ Color getColorLeft(String time) {
     } else {
       return Colors.red;
     }
+  }
+}
+
+String getDiffStartEndTime(
+    int startHour, int startMinute, int endHour, int endMinute) {
+  if (endMinute < startMinute) {
+    return "${endHour - startHour - 1}h ${60 - startMinute + endMinute}m";
+  } else {
+    return "${endHour - startHour}h ${endMinute - startMinute}m";
   }
 }
