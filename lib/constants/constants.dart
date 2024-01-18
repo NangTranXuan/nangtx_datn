@@ -11,13 +11,13 @@ const kPrimaryColor = Color(0XFF263064);
 const kPrimaryLightColor = Color(0xfffeeeee4);
 
 final kTitleTextStyle = TextStyle(
-  fontSize: 14,
+  fontSize: 15,
   fontWeight: FontWeight.w600,
 );
 
 final kCaptionTextStyle = TextStyle(
   fontSize: 14,
-  fontWeight: FontWeight.w100,
+  fontWeight: FontWeight.w300,
 );
 
 const double fontSizeText = 14;

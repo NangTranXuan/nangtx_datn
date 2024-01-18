@@ -31,35 +31,8 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.centerRight,
-                child: RichText(
-                  text: TextSpan(
-                    text: getWeekDayString(DateTime.now().weekday) + ', ',
-                    style: TextStyle(
-                      color: AppColors.kBlueClr,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w900,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: DateTime.now().day.toString() +
-                            ' ' +
-                            getMonthString(DateTime.now().month) +
-                            ' ' +
-                            DateTime.now().year.toString(),
-                        style: TextStyle(
-                          color: AppColors.kBlueClr,
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               SizedBox(
-                height: 15,
+                height: 25,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage("assets/icons/avatar.png"),
+                        image: AssetImage("assets/icons/avatar.png"),
                       ),
                     ),
                   ),
@@ -92,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         "Hi " + globals.fullName,
                         style: TextStyle(
-                          fontSize: fontSizeText * 1.5,
+                          fontSize: fontSizeText * 1.2,
                           fontWeight: FontWeight.w900,
                           color: Color(0XFF343E87),
                         ),
@@ -111,14 +84,36 @@ class _HomePageState extends State<HomePage> {
                         height: 8,
                       ),
                       Text(
-                        "You need to check...",
+                        "You need to check",
                         style: TextStyle(
                           fontSize: fontSizeText * 0.95,
                           color: Colors.blueGrey,
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    width: 90,
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.white),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blueGrey.withOpacity(0.2),
+                          blurRadius: 12,
+                          spreadRadius: 8,
+                        )
+                      ],
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/icons/logo.jpg"),
+                      ),
+                    ),
+                  ),
                 ],
               )
             ],
@@ -139,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 20,
                 ),
-                buildTitleRow("YOUR FUNCTIONS", 6),
+                buildTitleRow("YOUR FUNCTIONS", 5),
                 SizedBox(
                   height: 20,
                 ),

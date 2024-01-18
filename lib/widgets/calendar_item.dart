@@ -110,7 +110,7 @@ Container buildTaskListItem(
                 children: [
                   CircleAvatar(
                     radius: 9,
-                    backgroundImage: NetworkImage("assets/icons/avatar.png"),
+                    backgroundImage: AssetImage("assets/icons/avatar.png"),
                   ),
                   SizedBox(
                     width: 5,

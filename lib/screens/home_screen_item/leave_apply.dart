@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:datn_test/constants/ui_constants.dart';
+import 'package:flutter/material.dart';
 
-class Gallery extends StatelessWidget {
-  const Gallery({Key? key}) : super(key: key);
+class LeaveApply extends StatelessWidget {
+  LeaveApply({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class Gallery extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          MainText(txt: "No Gallery!"),
+          MainText(txt: "Function not yet supported!"),
         ],
       ),
     ));

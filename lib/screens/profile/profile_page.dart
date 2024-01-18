@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
           Container(
             height: kSpacingUnit * 10,
             width: kSpacingUnit * 10,
-            margin: EdgeInsets.only(top: kSpacingUnit * 3),
+            margin: EdgeInsets.only(top: kSpacingUnit * 5),
             child: Stack(
               children: <Widget>[
                 CircleAvatar(
@@ -48,12 +48,18 @@ class ProfilePage extends StatelessWidget {
           SizedBox(height: kSpacingUnit * 2),
           Text(
             globals.fullName,
-            style: kTitleTextStyle,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           SizedBox(height: kSpacingUnit * 0.5),
           Text(
             globals.email,
-            style: kCaptionTextStyle,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+            ),
           ),
           SizedBox(height: kSpacingUnit * 2),
           Container(
@@ -67,14 +73,14 @@ class ProfilePage extends StatelessWidget {
               child: Text(
                 'Edit profile',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: kDarkPrimaryColor,
                 ),
               ),
             ),
           ),
-          SizedBox(height: kSpacingUnit * 5),
+          SizedBox(height: kSpacingUnit * 3),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:datn_test/constants/constants.dart';
+import 'package:datn_test/model/homework.dart';
 import 'package:datn_test/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:datn_test/widgets/widgets.dart';
@@ -110,6 +111,16 @@ Future<void> validateAndSubmit(
               taskData[i]['homeworks'][j]['homework_name'],
               getColorLeft(taskData[i]['homeworks'][j]['start_time']),
               true));
+          homeworks.add(Homework(
+            name: taskData[i]['homeworks'][j]['homework_name'],
+            teacher: taskData[i]['teacher']['first_name'] +
+                " " +
+                taskData[i]['teacher']['last_name'],
+            nameClass: taskData[i]['name'],
+            dueDate: taskData[i]['homeworks'][j]['end_time'],
+            time: "1 hour",
+            imageUrl: getUrlImageClass(taskData[i]['type']),
+          ));
         }
         for (var j = 0; j < taskData[i]['exams'].length; j++) {
           taskItems.add(buildTaskItem(
@@ -120,10 +131,20 @@ Future<void> validateAndSubmit(
             getColorLeft(taskData[i]['exams'][j]['start_time']),
             false,
           ));
+
+          exams.add(Homework(
+            name: taskData[i]['exams'][j]['exam_name'],
+            teacher: taskData[i]['teacher']['first_name'] +
+                " " +
+                taskData[i]['teacher']['last_name'],
+            nameClass: taskData[i]['name'],
+            dueDate: taskData[i]['exams'][j]['end_time'],
+            time: "1 hour",
+            imageUrl: getUrlImageClass(taskData[i]['type']),
+          ));
         }
       }
     }
-    
 
     Navigator.push(
       context,

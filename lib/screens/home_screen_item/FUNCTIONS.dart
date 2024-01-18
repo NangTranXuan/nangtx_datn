@@ -1,6 +1,9 @@
-import 'package:datn_test/screens/home_screen_item/exam_schedule.dart';
-import 'package:datn_test/screens/home_screen_item/home_work.dart';
+import 'package:datn_test/screens/home_screen_item/complains.dart';
+import 'package:datn_test/screens/home_screen_item/your_exam.dart';
+import 'package:datn_test/screens/home_screen_item/leave_apply.dart';
+import 'package:datn_test/screens/home_screen_item/your_class.dart';
 import 'package:datn_test/screens/home_screen_item/results.dart';
+import 'package:datn_test/screens/home_screen_item/your_homework.dart';
 import 'package:flutter/material.dart';
 
 class MainFunction extends StatefulWidget {
@@ -21,7 +24,7 @@ class _MainFunctionState extends State<MainFunction> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeWork()),
+                  MaterialPageRoute(builder: (context) => YourClass()),
                 );
               },
               title: "Your Classes",
@@ -31,34 +34,7 @@ class _MainFunctionState extends State<MainFunction> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeWork()),
-                );
-              },
-              title: "Attendance",
-              icon: "assets/icons/attendance.png",
-            ),
-            CustomIconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ResultsScreen()),
-                );
-              },
-              title: "Complaints",
-              icon: "assets/icons/complain.png",
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            CustomIconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeWork()),
+                  MaterialPageRoute(builder: (context) => YourHomework()),
                 );
               },
               title: "Home Work",
@@ -74,15 +50,34 @@ class _MainFunctionState extends State<MainFunction> {
               title: "Exam",
               icon: "assets/icons/exam.png",
             ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
             CustomIconButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeWork()),
+                  MaterialPageRoute(builder: (context) => LeaveApply()),
                 );
               },
-              title: "Results",
-              icon: "assets/icons/results.png",
+              title: "Leave Apply",
+              icon: "assets/icons/attendance.png",
+            ),
+            CustomIconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Complaints()),
+                );
+              },
+              title: "Complaints",
+              icon: "assets/icons/complain.png",
             ),
           ],
         ),

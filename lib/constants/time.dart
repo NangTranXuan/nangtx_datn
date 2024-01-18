@@ -108,8 +108,19 @@ Color getColorLeft(String time) {
 String getDiffStartEndTime(
     int startHour, int startMinute, int endHour, int endMinute) {
   if (endMinute < startMinute) {
-    return "${endHour - startHour - 1}h ${60 - startMinute + endMinute}m";
+    return "${endHour - startHour - 1}h ${60 - startMinute + endMinute}0m";
   } else {
-    return "${endHour - startHour}h ${endMinute - startMinute}m";
+    return "${endHour - startHour}h ${endMinute - startMinute}0m";
   }
+}
+
+String getUrlImageClass(int typeClass) {
+  if (typeClass == 1)
+    return 'assets/icons/listen.png';
+  else if (typeClass == 2)
+    return 'assets/icons/read.png';
+  else if (typeClass == 3)
+    return 'assets/icons/speak.png';
+  else
+    return 'assets/icons/write.png';
 }

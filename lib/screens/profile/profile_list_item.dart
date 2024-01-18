@@ -55,19 +55,22 @@ class _ProfileListItemState extends State<ProfileListItem> {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kSpacingUnit * 3),
-          color: Color.fromARGB(255, 225, 225, 240),
+          color: widget.hasNavigation
+              ? Color.fromARGB(255, 225, 225, 240)
+              : Color.fromARGB(255, 238, 94, 84),
         ),
         child: Row(
           children: <Widget>[
             Icon(
               widget.icon,
-              size: kSpacingUnit * 1.5,
+              size: kSpacingUnit * 2.5,
             ),
             SizedBox(width: kSpacingUnit * 1.5),
             Text(
               widget.text,
-              style: kTitleTextStyle.copyWith(
-                fontWeight: FontWeight.w500,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
               ),
             ),
             Spacer(),

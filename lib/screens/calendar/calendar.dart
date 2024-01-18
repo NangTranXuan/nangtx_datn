@@ -51,7 +51,8 @@ class _CalendarPageState extends State<CalendarPage> {
                     ":" +
                     DateTime.parse(lessonDataSchedule[i]['lessons'][j]['start_time'])
                         .minute
-                        .toString(),
+                        .toString() +
+                    "0",
                 DateTime.parse(lessonDataSchedule[i]['lessons'][j]['start_time'])
                         .hour <
                     12,
@@ -113,7 +114,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       text: getWeekDayString(DateTime.now().weekday) + ', ',
                       style: TextStyle(
                         color: AppColors.kBlueClr,
-                        fontSize: 12,
+                        fontSize: 16,
                         fontWeight: FontWeight.w900,
                       ),
                       children: [
@@ -139,6 +140,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 child: Text(
                   "Today",
                   style: TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0XFF3E3993),
                   ),
